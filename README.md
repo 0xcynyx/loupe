@@ -1,6 +1,6 @@
 # Loupe
 
-A studio for Milvus. One fast Rust binary, no SDK, no Node, no Docker: it speaks the Milvus RESTful v2 API directly and embeds its whole UI.
+A studio for Milvus. One fast Rust binary that speaks the Milvus RESTful v2 API directly and embeds its whole UI. No SDK, no Node runtime, nothing else to install: run the 3MB binary bare, or pull the 20MB Docker image.
 
 ![Loupe sign in](docs/signin.png)
 
