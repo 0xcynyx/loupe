@@ -20,6 +20,26 @@ A studio for Milvus. One fast Rust binary, no SDK, no Node, no Docker: it speaks
 
 ## Run
 
+### Docker
+
+```sh
+docker run -p 3003:3003 ghcr.io/0xcynyx/loupe:latest
+```
+
+Then open http://127.0.0.1:3003 and sign in. Optionally prefill the form: add `-e MILVUS_HOST=... -e MILVUS_USER=... -e MILVUS_PASSWORD=...`.
+
+Or with compose:
+
+```yaml
+services:
+  loupe:
+    image: ghcr.io/0xcynyx/loupe:latest
+    ports:
+      - "3003:3003"
+```
+
+### From source
+
 ```sh
 cargo run --release
 ```
@@ -37,6 +57,7 @@ All settings come from env vars, or from a file passed via ENV_FILE. Process env
 | MILVUS_USER | root | Prefill for the sign in form |
 | MILVUS_PASSWORD | empty | Prefill for the sign in form |
 | MILVUS_GUI_PORT | 3003 | Port Loupe listens on |
+| MILVUS_GUI_BIND | 127.0.0.1 | Listen address, the Docker image sets 0.0.0.0 |
 | MILVUS_GUI_ROW_CAP | 200 | Hard cap on rows per query page |
 | MILVUS_GUI_SORT_CAP | 500000 | Max collection size for whole collection sort |
 
@@ -56,7 +77,7 @@ src/main.rs     wiring, routes, embedded static assets
 web/            vanilla JS frontend, embedded into the binary at compile time
 ```
 
-Loupe binds to 127.0.0.1 only. Milvus credentials pass through process memory for the life of a session and are never written to disk by the server.
+Loupe binds to 127.0.0.1 by default (0.0.0.0 inside Docker, publish the port only where you trust the network). Milvus credentials pass through process memory for the life of a session and are never written to disk by the server.
 
 ## License
 

@@ -10,6 +10,7 @@ pub struct Config {
     pub user: String,
     pub password: String,
     pub gui_port: u16,
+    pub bind: String,
     pub row_cap: usize,
     pub sort_cap: usize,
 }
@@ -31,6 +32,7 @@ impl Config {
             user: get("MILVUS_USER", "root"),
             password: get("MILVUS_PASSWORD", ""),
             gui_port: get("MILVUS_GUI_PORT", "3003").parse().unwrap_or(3003),
+            bind: get("MILVUS_GUI_BIND", "127.0.0.1"),
             row_cap: get("MILVUS_GUI_ROW_CAP", "200").parse().unwrap_or(200),
             sort_cap: get("MILVUS_GUI_SORT_CAP", "500000").parse().unwrap_or(500_000),
         }

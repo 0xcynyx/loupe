@@ -31,6 +31,7 @@ async fn favicon() -> impl IntoResponse {
 async fn main() {
     let config = config::Config::load();
     let port = config.gui_port;
+    let bind = config.bind.clone();
     let state = api::AppState {
         config,
         sessions: Arc::new(RwLock::new(std::collections::HashMap::new())),
@@ -52,7 +53,7 @@ async fn main() {
         .route("/api/collections/{name}/release", post(api::release_collection))
         .with_state(state);
 
-    let addr = format!("127.0.0.1:{port}");
+    let addr = format!("{bind}:{port}");
     let listener = tokio::net::TcpListener::bind(&addr).await.expect("bind failed");
     println!("loupe running at http://{addr}");
     axum::serve(listener, app).await.expect("server failed");
