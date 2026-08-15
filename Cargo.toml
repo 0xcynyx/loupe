@@ -1,0 +1,19 @@
+[package]
+name = "loupe"
+version = "0.1.0"
+edition = "2021"
+description = "Loupe, a fast open source studio for Milvus, a single binary that proxies the Milvus RESTful v2 API"
+license = "MIT"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+futures = "0.3"
+async-trait = "0.1"
+
+[profile.release]
+lto = true
+strip = true

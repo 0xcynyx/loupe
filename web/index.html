@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loupe</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<button type="button" id="btn-theme-float" class="icon theme-float hidden" title="Toggle theme">&#9789;</button>
+
+<div id="signin-view" class="connect-wrap hidden">
+  <div class="connect-card">
+    <h1><svg class="mark mark-lg" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(2.1 2.1)"><path d="M 37.338 33.661 L 52.894 49.217 L 49.217 52.894 L 33.661 37.338 Z" fill="var(--accent)"/><circle cx="25.6" cy="25.6" r="15.4" fill="none" stroke="var(--accent)" stroke-width="5.2"/><circle cx="25.6" cy="25.6" r="2.9" fill="var(--icon-amber)"/></g></svg>Loupe</h1>
+    <p class="sub">A studio for Milvus</p>
+
+    <div id="saved-block" class="hidden">
+      <div class="section-label">Saved connections</div>
+      <ul id="saved-list" class="saved"></ul>
+      <div class="divider"><span>or connect to a new host</span></div>
+    </div>
+
+    <form id="connect-form" class="connect-form">
+      <label>Connection name <input id="in-name" placeholder="production, staging, local"></label>
+      <label>Host <input id="in-host" placeholder="milvus host or ip" required></label>
+      <div class="row2">
+        <label>Port <input id="in-port" value="19530" required></label>
+        <label>User <input id="in-user" value="root" required></label>
+      </div>
+      <label>Password <input id="in-password" type="password"></label>
+      <button type="submit" id="btn-connect">Connect</button>
+      <div id="connect-error" class="error hidden"></div>
+      <p class="note">Connections are saved in this browser only.</p>
+    </form>
+  </div>
+</div>
+
+<div id="main-view" class="layout hidden">
+  <aside class="sidebar">
+    <div class="side-head">
+      <span class="brand"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(2.1 2.1)"><path d="M 37.338 33.661 L 52.894 49.217 L 49.217 52.894 L 33.661 37.338 Z" fill="var(--accent)"/><circle cx="25.6" cy="25.6" r="15.4" fill="none" stroke="var(--accent)" stroke-width="5.2"/><circle cx="25.6" cy="25.6" r="2.9" fill="var(--icon-amber)"/></g></svg>Loupe</span>
+      <div class="side-tools">
+        <button type="button" id="btn-theme" class="icon" title="Toggle theme">&#9789;</button>
+        <button type="button" id="btn-refresh" class="icon" title="Refresh collections">&#8635;</button>
+      </div>
+    </div>
+    <div class="conn-chip">
+      <div>
+        <div id="conn-name" class="conn-name"></div>
+        <div id="target" class="target"></div>
+      </div>
+      <button type="button" id="btn-switch" class="ghost small" title="Switch connection">Switch</button>
+    </div>
+    <ul id="collection-list" class="collections"></ul>
+  </aside>
+
+  <main class="content">
+    <div id="empty-hint" class="empty">Select a collection on the left</div>
+
+    <section id="detail" class="hidden">
+      <header class="detail-head">
+        <div>
+          <h2 id="col-name"></h2>
+          <span id="col-meta" class="meta"></span>
+        </div>
+        <div class="actions">
+          <button id="btn-load" class="ghost">Load</button>
+          <button id="btn-release" class="ghost">Release</button>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button data-tab="schema" class="tab active">Schema</button>
+        <button data-tab="data" class="tab">Data</button>
+      </nav>
+
+      <section id="tab-schema" class="tab-pane">
+        <h3>Fields</h3>
+        <div class="table-wrap"><table id="fields-table"></table></div>
+        <h3>Indexes</h3>
+        <div class="table-wrap"><table id="indexes-table"></table></div>
+      </section>
+
+      <section id="tab-data" class="tab-pane hidden">
+        <form id="query-form" class="query-bar">
+          <input id="in-filter" placeholder='filter expression, for example: user_id == "abc" (empty for all rows)'>
+          <select id="in-limit">
+            <option>25</option><option selected>50</option><option>100</option><option>200</option>
+          </select>
+          <button type="submit">Run</button>
+        </form>
+        <div class="pager">
+          <button id="btn-prev" class="ghost">&larr; Prev</button>
+          <span id="page-info"></span>
+          <button id="btn-next" class="ghost">Next &rarr;</button>
+        </div>
+        <div class="table-wrap"><table id="data-table"></table></div>
+        <p class="note">Click a column header to sort the whole collection, BigQuery style. Vector fields are hidden here, see Schema for their dimensions.</p>
+      </section>
+    </section>
+  </main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/app.js"></script>
+</body>
+</html>
