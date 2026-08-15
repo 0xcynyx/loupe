@@ -2,6 +2,8 @@
 
 A studio for Milvus. One fast Rust binary, no SDK, no Node, no Docker: it speaks the Milvus RESTful v2 API directly and embeds its whole UI.
 
+![Loupe sign in](docs/signin.png)
+
 ## Features
 
 - Sign in page with saved connections, switch between any number of Milvus hosts
